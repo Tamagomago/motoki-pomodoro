@@ -1,10 +1,13 @@
-import { Button } from '@/components/ui/button';
+import Nav from './components/Nav';
 function App() {
   return (
-    <>
-      <h1 className={'text-2xl text-blue-500'}>TEST</h1>
-      <Button>Test Button</Button>
-    </>
+    <div
+      className={
+        'h-screen w-screen bg-[url(./assets/bg-main.png)] bg-cover bg-no-repeat'
+      }
+    >
+      <Nav />
+    </div>
   );
 }
 
