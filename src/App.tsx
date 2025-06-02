@@ -1,4 +1,5 @@
 import Nav from './components/Nav';
+import Timer from '@/components/timer/Timer';
 function App() {
   return (
     <div
@@ -7,6 +8,9 @@ function App() {
       }
     >
       <Nav />
+      <div className={'flex h-screen w-screen items-center justify-center'}>
+        <Timer />
+      </div>
     </div>
   );
 }
