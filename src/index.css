@@ -3,6 +3,21 @@
 
 @custom-variant dark (&:is(.dark *));
 
+@font-face {
+  font-family: 'SF Pro';
+  src: url('../public/fonts/SF-Pro.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'SF Pro Mono';
+  src: url('../public/fonts/SF-Mono-Bold.otf') format('opentype');
+}
+@theme {
+  --font-primary: 'SF Pro', 'sans-serif';
+  --font-timer: 'SF Pro Mono', 'monospace';
+  --bg-image-main: 'url(/assets/background/bg-main.png)';
+}
+
 @theme inline {
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
@@ -117,4 +132,12 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+
+.btn {
+  @apply text-[16px] font-light text-white/50 transition delay-150 duration-400 ease-linear hover:bg-gray-200/5 hover:text-white/80 hover:opacity-80 hover:backdrop-blur-sm;
+}
+
+.active {
+  @apply bg-gray-200/5 text-white/80 opacity-80 backdrop-blur-sm;
 }
