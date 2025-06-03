@@ -139,5 +139,13 @@
 }
 
 .active {
-  @apply bg-gray-200/5 text-white/80 opacity-80 backdrop-blur-sm;
+  @apply bg-gray-200/5 text-white/80 backdrop-blur-sm;
+}
+
+.dialog {
+  @apply text-white/50 opacity-100 backdrop-blur-xl bg-transparent border-0;
+}
+
+.input {
+  @apply border-white/20;
 }

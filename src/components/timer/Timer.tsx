@@ -7,10 +7,13 @@ import {
   ForwardIcon,
   PlayIcon,
   PauseIcon,
+  Cog6ToothIcon,
 } from '@heroicons/react/24/solid';
 import useTimer from '@/components/hooks/useTimer';
 import ModeSelector from '@/components/timer/ModeSelector';
 import Controls from '@/components/timer/Controls';
+import { useState } from 'react';
+import SettingsDialog from '@/components/SettingsDialog';
 
 interface ControlButton {
   icon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
@@ -29,10 +32,13 @@ function Timer() {
     selectedMode,
   } = useTimer();
 
+  const [showSettings, setShowSettings] = useState<boolean>(false);
+
   const controls: ControlButton[] = [
     { icon: ArrowPathIcon, action: resetTimer },
     { icon: isRunning ? PauseIcon : PlayIcon, action: toggleTimer },
     { icon: ForwardIcon, action: skipTimer },
+    { icon: Cog6ToothIcon, action: () => setShowSettings(true) },
   ];
 
   return (
@@ -46,6 +52,7 @@ function Timer() {
         {formatTimer(timerLeft)}
       </h1>
       <Controls controls={controls} />
+      <SettingsDialog open={showSettings} onOpenChange={setShowSettings} />
     </div>
   );
 }
