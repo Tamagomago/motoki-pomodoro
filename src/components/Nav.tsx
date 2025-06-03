@@ -7,7 +7,7 @@ function Nav() {
     >
       <a href="#" className="item-center flex">
         <img src="/favicon.png" alt="Pomodoro Logo" className={'h-12 w-auto'} />
-        <h1 className="font-primary flex items-center text-2xl font-[600] text-white/70">
+        <h1 className="font-primary flex items-center text-2xl font-[600] text-white/25">
           MOTOKI
         </h1>
       </a>
