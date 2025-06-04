@@ -1,4 +1,4 @@
-import { TIMER_MODE } from '@/components/timerConfig';
+import { TIMER_MODE } from '@/components/timer/timerConfig';
 import { Button } from '@/components/ui/button';
 
 type TimerModeKey = keyof typeof TIMER_MODE;

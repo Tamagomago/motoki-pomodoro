@@ -9,7 +9,7 @@ import {
   PauseIcon,
   Cog6ToothIcon,
 } from '@heroicons/react/24/solid';
-import useTimer from '@/components/hooks/useTimer';
+import useTimer from '@/components/timer/hooks/useTimer';
 import ModeSelector from '@/components/timer/ModeSelector';
 import Controls from '@/components/timer/Controls';
 import { useState } from 'react';
@@ -30,6 +30,7 @@ function Timer() {
     skipTimer,
     formatTimer,
     selectedMode,
+    handleSettingsUpdate,
   } = useTimer();
 
   const [showSettings, setShowSettings] = useState<boolean>(false);
@@ -52,7 +53,11 @@ function Timer() {
         {formatTimer(timerLeft)}
       </h1>
       <Controls controls={controls} />
-      <SettingsDialog open={showSettings} onOpenChange={setShowSettings} />
+      <SettingsDialog
+        open={showSettings}
+        onOpenChange={setShowSettings}
+        handleSettingsUpdate={handleSettingsUpdate}
+      />
     </div>
   );
 }
