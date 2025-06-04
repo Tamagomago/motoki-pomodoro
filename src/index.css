@@ -135,7 +135,11 @@
 }
 
 .btn {
-  @apply text-[16px] font-light text-white/50 transition delay-150 duration-400 ease-linear hover:bg-gray-200/5 hover:text-white/80 hover:opacity-80 hover:backdrop-blur-sm;
+  @apply text-[16px] font-light text-white/50 transition delay-150 duration-400 ease-linear;
+}
+
+.btn:not(.active):hover {
+  @apply bg-gray-200/5 text-white/80 opacity-80 backdrop-blur-xs;
 }
 
 .active {
@@ -143,7 +147,7 @@
 }
 
 .dialog {
-  @apply text-white/50 opacity-100 backdrop-blur-xl bg-transparent border-0;
+  @apply text-white/60 opacity-100 backdrop-blur-xl bg-transparent border-1 border-white/30;
 }
 
 .input {
