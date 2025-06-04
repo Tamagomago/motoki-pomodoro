@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import { TIMER_MODE } from '@/components/timerConfig';
+import { TIMER_MODE } from '@/components/timer/timerConfig';
 
 type TimerModeKey = keyof typeof TIMER_MODE;
 
@@ -8,6 +8,14 @@ interface TimerState {
   timerLeft: number;
   isRunning: boolean;
   cycleCount: number;
+  longBreakInterval: number;
+}
+
+export interface Settings {
+  pomodoro: number;
+  shortBreak: number;
+  longBreak: number;
+  interval: number;
 }
 
 function useTimer() {
@@ -17,7 +25,25 @@ function useTimer() {
     timerLeft: TIMER_MODE['Pomodoro'].duration,
     isRunning: false,
     cycleCount: 1,
+    longBreakInterval: 4,
   });
+
+  const handleSettingsUpdate = ({
+    pomodoro,
+    shortBreak,
+    longBreak,
+    interval,
+  }: Settings) => {
+    TIMER_MODE['Pomodoro'].duration = pomodoro * 60;
+    TIMER_MODE['ShortBreak'].duration = shortBreak * 60;
+    TIMER_MODE['LongBreak'].duration = longBreak * 60;
+    setState((prev) => ({
+      ...prev,
+      cycleCount: 1,
+      longBreakInterval: Math.floor(interval),
+    }));
+    resetTimer();
+  };
 
   // Timer control functions
   const resetTimer = useCallback(() => {
@@ -38,7 +64,7 @@ function useTimer() {
   const skipTimer = useCallback(() => {
     const nextCount = state.cycleCount + 1;
     const nextMode: TimerModeKey =
-      nextCount % 4 === 0
+      nextCount % state.longBreakInterval === 0
         ? 'LongBreak'
         : nextCount % 2 === 0
           ? 'ShortBreak'
@@ -56,7 +82,7 @@ function useTimer() {
   // Determine next timer mode based on cycle count
   const nextTimer = useCallback((nextCycle: number) => {
     const nextMode: TimerModeKey =
-      nextCycle % 4 === 0
+      nextCycle % state.longBreakInterval === 0
         ? 'LongBreak'
         : nextCycle % 2 === 0
           ? 'ShortBreak'
@@ -118,6 +144,7 @@ function useTimer() {
     skipTimer,
     formatTimer,
     selectedMode: selectMode,
+    handleSettingsUpdate,
   };
 }
 
