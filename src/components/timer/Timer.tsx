@@ -15,6 +15,9 @@ import Controls from '@/components/timer/Controls';
 import { useState } from 'react';
 import SettingsDialog from '@/components/timer/SettingsDialog';
 import type { Control } from '@/types/types';
+import alarm from '@/assets/audio/alarm.mp3';
+import bgMusic from '@/assets/audio/bg-music.mp3';
+import useAudioPlayer from '@/components/timer/hooks/useAudioPlayer';
 
 function Timer() {
   const {
@@ -30,6 +33,12 @@ function Timer() {
   } = useTimer();
 
   const [showSettings, setShowSettings] = useState<boolean>(false);
+
+  useAudioPlayer(bgMusic, isRunning, 0.3);
+  useAudioPlayer(alarm, timerLeft <= 7, 1, (audio) => {
+    audio.pause();
+    audio.currentTime = 0;
+  });
 
   const controls: Control[] = [
     { icon: ArrowPathIcon, action: resetTimer },
