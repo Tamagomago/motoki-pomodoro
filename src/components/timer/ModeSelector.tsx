@@ -1,7 +1,7 @@
 import { TIMER_MODE } from '@/components/timer/timerConfig';
 import { Button } from '@/components/ui/button';
+import type { TimerModeKey } from '@/types/types';
 
-type TimerModeKey = keyof typeof TIMER_MODE;
 type ModeProps = {
   activeMode: TimerModeKey;
   selectedMode: (mode: TimerModeKey) => void;

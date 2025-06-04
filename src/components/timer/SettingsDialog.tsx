@@ -8,10 +8,10 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog.tsx';
-import { Label } from '@/components/ui/label';
+import { Label } from '@/components/ui/label.tsx';
 import { Input } from '@/components/ui/input.tsx';
 import { Button } from '@/components/ui/button.tsx';
-import type { Settings } from '@/components/timer/hooks/useTimer.ts';
+import type { Settings } from '@/types/types';
 
 type SettingsDialogProps = {
   open: boolean;

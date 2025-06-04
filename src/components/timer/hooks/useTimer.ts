@@ -1,22 +1,15 @@
 import { useCallback, useEffect, useState } from 'react';
 import { TIMER_MODE } from '@/components/timer/timerConfig';
+import type { Settings } from '@/types/types';
+import type { TimerModeKey } from '@/types/types';
 
-type TimerModeKey = keyof typeof TIMER_MODE;
-
-interface TimerState {
+type TimerState = {
   activeMode: TimerModeKey;
   timerLeft: number;
   isRunning: boolean;
   cycleCount: number;
   longBreakInterval: number;
-}
-
-export interface Settings {
-  pomodoro: number;
-  shortBreak: number;
-  longBreak: number;
-  interval: number;
-}
+};
 
 function useTimer() {
   // Initial state

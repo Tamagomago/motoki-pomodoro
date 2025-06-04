@@ -1,13 +1,8 @@
 import { Button } from '@/components/ui/button';
-import type { ComponentType, SVGProps } from 'react';
+import type { Control } from '@/types/types';
 
 type ControlsProps = {
   controls: Control[];
-};
-
-type Control = {
-  icon: ComponentType<SVGProps<SVGSVGElement>>;
-  action: () => void;
 };
 
 function Controls({ controls }: ControlsProps) {

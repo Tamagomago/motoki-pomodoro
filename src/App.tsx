@@ -1,4 +1,4 @@
-import Nav from './components/Nav';
+import Nav from './components/layout/Nav.tsx';
 import Timer from '@/components/timer/Timer';
 function App() {
   return (

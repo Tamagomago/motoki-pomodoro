@@ -13,12 +13,8 @@ import useTimer from '@/components/timer/hooks/useTimer';
 import ModeSelector from '@/components/timer/ModeSelector';
 import Controls from '@/components/timer/Controls';
 import { useState } from 'react';
-import SettingsDialog from '@/components/SettingsDialog';
-
-interface ControlButton {
-  icon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
-  action: () => void;
-}
+import SettingsDialog from '@/components/timer/SettingsDialog';
+import type { Control } from '@/types/types';
 
 function Timer() {
   const {
@@ -35,7 +31,7 @@ function Timer() {
 
   const [showSettings, setShowSettings] = useState<boolean>(false);
 
-  const controls: ControlButton[] = [
+  const controls: Control[] = [
     { icon: ArrowPathIcon, action: resetTimer },
     { icon: isRunning ? PauseIcon : PlayIcon, action: toggleTimer },
     { icon: ForwardIcon, action: skipTimer },
