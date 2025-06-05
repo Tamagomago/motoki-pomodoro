@@ -7,7 +7,6 @@ type TimerState = {
   activeMode: TimerModeKey;
   timerLeft: number;
   isRunning: boolean;
-  cycleCount: number;
   longBreakInterval: number;
   completedPomodoros: number;
 };
@@ -18,7 +17,6 @@ function useTimer() {
     activeMode: 'Pomodoro',
     timerLeft: TIMER_MODE['Pomodoro'].duration,
     isRunning: false,
-    cycleCount: 1,
     longBreakInterval: 4,
     completedPomodoros: 0,
   });
@@ -58,57 +56,30 @@ function useTimer() {
   }, []);
 
   const skipTimer = useCallback(() => {
-    setState((prev) => {
-      let nextMode: TimerModeKey;
-      let newCompletedPomodoros = prev.completedPomodoros;
-
-      if (prev.activeMode === 'Pomodoro') {
-        newCompletedPomodoros = prev.completedPomodoros + 1;
-        nextMode =
-          newCompletedPomodoros % prev.longBreakInterval === 0
-            ? 'LongBreak'
-            : 'ShortBreak';
-      } else {
-        nextMode = 'Pomodoro';
-      }
-
-      return {
-        ...prev,
-        isRunning: false,
-        cycleCount: prev.cycleCount + 1,
-        completedPomodoros: newCompletedPomodoros,
-        activeMode: nextMode,
-        timerLeft: TIMER_MODE[nextMode].duration,
-      };
-    });
+    setState((prev) => nextTimer(prev));
   }, []);
 
-  // Determine next timer mode based on cycle count
-  const nextTimer = useCallback(
-    (nextCycle: number) => {
-      const nextMode: TimerModeKey =
-        nextCycle % state.longBreakInterval === 0
+  const nextTimer = useCallback((prev: TimerState) => {
+    let nextMode: TimerModeKey;
+    let newCompletedPomodoros = prev.completedPomodoros;
+
+    if (prev.activeMode === 'Pomodoro') {
+      newCompletedPomodoros = prev.completedPomodoros + 1;
+      nextMode =
+        newCompletedPomodoros % prev.longBreakInterval === 0
           ? 'LongBreak'
-          : nextCycle % 2 === 0
-            ? 'ShortBreak'
-            : 'Pomodoro';
+          : 'ShortBreak';
+    } else {
+      nextMode = 'Pomodoro';
+    }
 
-      return {
-        mode: nextMode,
-        duration: TIMER_MODE[nextMode].duration,
-      };
-    },
-    [state.longBreakInterval]
-  );
-
-  // Manual mode selection
-  const selectMode = useCallback((mode: TimerModeKey) => {
-    setState((prev) => ({
+    return {
       ...prev,
       isRunning: false,
-      activeMode: mode,
-      timerLeft: TIMER_MODE[mode].duration,
-    }));
+      completedPomodoros: newCompletedPomodoros,
+      activeMode: nextMode,
+      timerLeft: TIMER_MODE[nextMode].duration,
+    };
   }, []);
 
   // Format timer display (MM:SS)
@@ -127,19 +98,8 @@ function useTimer() {
         const newTimeLeft = prev.timerLeft - 1;
 
         if (newTimeLeft <= 0) {
-          const nextCount = prev.cycleCount + 1;
-          const nextTimerInfo = nextTimer(nextCount);
-
-          return {
-            ...prev,
-            cycleCount: nextCount,
-            activeMode: nextTimerInfo.mode,
-            timerLeft: nextTimerInfo.duration,
-            isRunning: false, // Stop the timer automatically
-          };
+          return nextTimer(prev);
         }
-
-        // Normal countdown
         return {
           ...prev,
           timerLeft: newTimeLeft,
@@ -149,6 +109,16 @@ function useTimer() {
 
     return () => clearInterval(interval);
   }, [state.isRunning, nextTimer]);
+
+  // Manual mode selection
+  const selectMode = useCallback((mode: TimerModeKey) => {
+    setState((prev) => ({
+      ...prev,
+      isRunning: false,
+      activeMode: mode,
+      timerLeft: TIMER_MODE[mode].duration,
+    }));
+  }, []);
 
   return {
     activeMode: state.activeMode,
