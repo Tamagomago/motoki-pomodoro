@@ -52,7 +52,7 @@ function Timer() {
       <ModeSelector activeMode={activeMode} selectedMode={selectedMode} />
       <h1
         className={
-          'font-timer flex items-center justify-center py-2 text-9xl text-white/50'
+          'font-timer flex items-center justify-center py-2 text-8xl sm:text-9xl text-white/50'
         }
       >
         {formatTimer(timerLeft)}

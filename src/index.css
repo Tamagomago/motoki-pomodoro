@@ -135,7 +135,7 @@
 }
 
 .btn {
-  @apply text-[16px] font-light text-white/50 transition delay-150 duration-400 ease-linear;
+  @apply font-light text-white/50 transition delay-150 duration-400 ease-linear;
 }
 
 .btn:not(.active):hover {

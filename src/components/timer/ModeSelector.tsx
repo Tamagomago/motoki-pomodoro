@@ -14,7 +14,7 @@ function ModeSelector({ activeMode, selectedMode }: ModeProps) {
         <Button
           key={key}
           variant="ghost"
-          className={`btn ${activeMode === key ? 'active' : ''}`}
+          className={`btn ${activeMode === key ? 'active' : ''} text-[12px] sm:text-[14px] md:text-[16px] `}
           onClick={() => {
             selectedMode(key as TimerModeKey);
           }}

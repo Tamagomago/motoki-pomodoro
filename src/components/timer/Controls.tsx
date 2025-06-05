@@ -12,7 +12,7 @@ function Controls({ controls }: ControlsProps) {
         <Button
           key={i}
           variant={'ghost'}
-          className={'btn h-16 w-16'}
+          className="btn h-12 w-12 sm:h-14 sm:w-14 md:h-16 md:w-16"
           onClick={action}
         >
           <Icon
