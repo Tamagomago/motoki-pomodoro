@@ -15,4 +15,5 @@ export type Settings = {
   shortBreak: number;
   longBreak: number;
   interval: number;
+  autorun: boolean;
 };

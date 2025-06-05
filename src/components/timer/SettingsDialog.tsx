@@ -8,6 +8,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
+import { Checkbox } from '@/components/ui/checkbox.tsx';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -49,7 +50,10 @@ function SettingsDialog({
               shortBreak: Number(formData.get('ShortBreak')),
               longBreak: Number(formData.get('LongBreak')),
               interval: Number(formData.get('Interval')),
+              autorun: formData.get('AutoRun') === 'on',
             });
+            const autorun = formData.get('AutoRun') === 'on';
+            console.log('Checkbox checked?', autorun);
             onOpenChange(false);
           }}
         >
@@ -96,6 +100,16 @@ function SettingsDialog({
                 className={'input'}
                 type={'number'}
               />
+            </div>
+            <div className="flex items-center space-x-2">
+              <Checkbox
+                id="AutoRun"
+                name="AutoRun"
+                className={
+                  'border-white/50 data-[state=checked]:bg-white/50 data-[state=checked]:border-white/50 data-[state=checked]:text-white'
+                }
+              />
+              <Label htmlFor="AutoRun">Auto Run Timer</Label>
             </div>
           </div>
           <DialogFooter className={'mt-4'}>

@@ -9,6 +9,7 @@ type TimerState = {
   isRunning: boolean;
   longBreakInterval: number;
   completedPomodoros: number;
+  autorun: boolean;
 };
 
 function useTimer() {
@@ -19,6 +20,7 @@ function useTimer() {
     isRunning: false,
     longBreakInterval: 4,
     completedPomodoros: 0,
+    autorun: false,
   });
 
   const handleSettingsUpdate = ({
@@ -26,6 +28,7 @@ function useTimer() {
     shortBreak,
     longBreak,
     interval,
+    autorun = false,
   }: Settings) => {
     TIMER_MODE['Pomodoro'].duration = pomodoro * 60;
     TIMER_MODE['ShortBreak'].duration = shortBreak * 60;
@@ -35,9 +38,14 @@ function useTimer() {
       cycleCount: 1,
       completedPomodoros: 0,
       longBreakInterval: Math.floor(interval),
+      autorun: autorun,
     }));
     resetTimer();
   };
+
+  useEffect(() => {
+    console.log('Updated autorun state:', state.autorun);
+  }, [state.autorun]);
 
   // Timer control functions
   const resetTimer = useCallback(() => {
@@ -56,10 +64,10 @@ function useTimer() {
   }, []);
 
   const skipTimer = useCallback(() => {
-    setState((prev) => nextTimer(prev));
+    setState((prev) => nextTimer(prev, true));
   }, []);
 
-  const nextTimer = useCallback((prev: TimerState) => {
+  const nextTimer = useCallback((prev: TimerState, forceStop = false) => {
     let nextMode: TimerModeKey;
     let newCompletedPomodoros = prev.completedPomodoros;
 
@@ -75,7 +83,7 @@ function useTimer() {
 
     return {
       ...prev,
-      isRunning: false,
+      isRunning: forceStop ? false : prev.autorun,
       completedPomodoros: newCompletedPomodoros,
       activeMode: nextMode,
       timerLeft: TIMER_MODE[nextMode].duration,
